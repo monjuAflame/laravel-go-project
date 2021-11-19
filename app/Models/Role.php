@@ -12,7 +12,7 @@ class Role extends Model
 {
     use HasFactory;
 
-    protected $gurded = ['id'];
+    protected $guarded = ['id'];
 
     public function permissions(){
 

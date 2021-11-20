@@ -17,6 +17,7 @@
     <!-- Styles -->
     <link href="{{ asset('main.css') }}" rel="stylesheet">
     <script href="{{ asset('css/app.css') }}"></script>
+    <link href="{{ asset('css/iziToast.css') }}" rel="stylesheet">
 
     @stack('css')
 </head>
@@ -40,8 +41,10 @@
         <!-- Scripts -->
         <script src="{{ asset('assets/scripts/main.js') }}"></script>
         <script src="{{ asset('js/app.js') }}"></script>
+        <script src="{{ asset('js/iziToast.js') }}"></script>
         <script src="{{ asset('js/script.js') }}"></script>
         @stack('js')
+        @include('vendor.lara-izitoast.toast')
 </body>
 
 </html>

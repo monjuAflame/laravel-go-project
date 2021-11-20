@@ -15,6 +15,7 @@ class DashboardController extends Controller
      */
     public function __invoke(Request $request)
     {
+        notify()->info("Welcome To Dashboard !","Success");
         return view('backend.dashboard');
     }
 }

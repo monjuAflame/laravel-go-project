@@ -47,6 +47,12 @@
                         Role
                     </a>
                 </li>
+                <li>
+                    <a href="{{  route('app.users.index') }}" class="{{ Request::is('app/users*') ? 'mm-active' : '' }}">
+                        <i class="metismenu-icon pe-7s-user"></i>
+                        User
+                    </a>
+                </li>
                 
             </ul>
         </div>

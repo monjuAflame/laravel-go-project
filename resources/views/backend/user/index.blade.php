@@ -55,7 +55,7 @@
                                         <div class="widget-content-left mr-3">
                                             <div class="widget-content-left">
                                                 <img width="40" class="rounded-circle"
-                                                    src="{{ config('app.placeholder') . '160.png' }}" alt="">
+                                                    src="{{ $user->getFirstMediaUrl('avatar') != null ? $user->getFirstMediaUrl('avatar') : config('app.placeholder') . '160.png' }}" alt="">
                                             </div>
                                         </div>
                                         <div class="widget-content-left flex2">
@@ -81,6 +81,11 @@
                             </td>
                             <td class="text-center">{{ $user->created_at->diffForHumans() }}</td>
                             <td class="text-center">
+                                <a href="{{ route('app.users.show', $user->id) }}"
+                                    class="btn btn-primary btn-sm">
+                                    <i class="fa fa-edit"></i>
+                                    <span>Show</span>
+                                </a>
                                 <a href="{{ route('app.users.edit', $user->id) }}"
                                     class="btn btn-primary btn-sm">
                                     <i class="fa fa-edit"></i>

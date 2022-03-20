@@ -3,9 +3,13 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Users\StoreUserRequest;
+use App\Http\Requests\Users\UpdateUserRequest;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -28,7 +32,9 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        Gate::authorize('app.user.create');
+        $roles = Role::all();
+        return view('backend.user.form', compact('roles'));
     }
 
     /**
@@ -37,9 +43,15 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreUserRequest $request)
     {
-        //
+        try {
+            (new \App\Services\UserService())->store($request->validated());
+            notify()->success('User Successfully Added.', 'Added');
+            return redirect()->route('app.users.index');
+        } catch (\Throwable $th) {
+            return back()->with('error', $th->getMessage());
+        }
     }
 
     /**
@@ -50,7 +62,8 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        //
+        Gate::authorize('app.user.index');
+        return view('backend.user.show', compact('user'));
     }
 
     /**
@@ -61,7 +74,9 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        //
+        Gate::authorize('app.user.edit');
+        $roles = Role::all();
+        return view('backend.user.form', compact('user', 'roles'));
     }
 
     /**
@@ -71,9 +86,16 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(UpdateUserRequest $request, User $user)
     {
-        //
+        try {
+            (new \App\Services\UserService())->update($request->validated(), $user);
+            notify()->success('User Successfully Updated.', 'Added');
+            return redirect()->route('app.users.index');
+        } catch (\Throwable $th) {
+            return back()->with('error', $th->getMessage());
+        }
+
     }
 
     /**
